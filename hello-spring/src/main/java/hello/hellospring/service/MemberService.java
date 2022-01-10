@@ -23,6 +23,7 @@ public class MemberService {
         return member.getId();
     }
 
+    //이미 존재하는 회원인지 조회
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())
             .ifPresent(m -> {
