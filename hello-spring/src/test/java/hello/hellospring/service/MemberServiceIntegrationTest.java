@@ -1,32 +1,24 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import static org.junit.jupiter.api.Assertions.*;
+@SpringBootTest // 스프링 컨테이너와 함께 테스트 실행!!!!!!!!!!!!
+@Transactional // 테스트 실행할 때 디비에 트랜잭션 걸고 테스트 끝나면 롤백해버림 ㅋ 개꿀~
+class MemberServiceIntegrationTest {
 
-class MemberServiceTest {
-
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-
-    @BeforeEach // 실행되기 전에 시작하는 함수
-    public void beforeEach() {
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository); // 같은 멤버 리포짓토리를 사용하기 위해서 요래해줌... 멤버서비스에서 콘스트럭터 넣음...
-        //강의 한번 더보자!! 이게 바로 디펜던시 인젝션~~!!!
-    }
-
-    @AfterEach // 각 테스트 후에 실행 되는 함수
-    public void afterEach() {
-        memberRepository.clearStore(); // 해당 함수가 없으면 각각 테스트가 서로 간섭할 수 있음!!(store에 객체가 여러번 들어가게 되니까)
-    }
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
     @Test
     void 회원가입() {// join 함수 테스트긴 한데 테스트는 그냥 한글로 적어도 무방
@@ -34,7 +26,7 @@ class MemberServiceTest {
 
         //given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("이상온");
 
         //when
         Long saveId = memberService.join(member);
@@ -42,8 +34,6 @@ class MemberServiceTest {
         //then
         Member findMember = memberService.findOne(saveId).get();
         Assertions.assertThat(member.getName()).isEqualTo(findMember.getName());
-
-
     }
 
     @Test
@@ -60,24 +50,5 @@ class MemberServiceTest {
 
         Assertions.assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
-//        try {
-//            memberService.join(member2);
-//            fail();
-//        }
-//        catch (IllegalStateException e){
-//
-//            Assertions.assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
-//
-//        }
-
-        //then
-    }
-
-    @Test
-    void findMembers() {
-    }
-
-    @Test
-    void findOne() {
     }
 }
