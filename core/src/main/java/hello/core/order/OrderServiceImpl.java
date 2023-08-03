@@ -7,11 +7,13 @@ import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+//@RequiredArgsConstructor // lombok 이거 있으면 생성자주입 자동으로 해줌 ㄷㄷㄷㄷㄷㄷ @Getter @Setter @ToString 등등 lombok 검색해보기~
 public class OrderServiceImpl implements OrderService {
 
     private final MemberRepository memberRepository;
