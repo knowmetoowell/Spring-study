@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class helloController {
+public class HelloController {
 
     @GetMapping("hello") // get mapping에 적은 스트링으로 url 이동 가능
     public String hello(Model model){
