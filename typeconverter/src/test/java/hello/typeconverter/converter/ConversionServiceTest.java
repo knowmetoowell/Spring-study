@@ -20,8 +20,12 @@ public class ConversionServiceTest {
         //System.out.println("result = " + result);
         assertThat(conversionService.convert("10", Integer.class)).isEqualTo(10);
         assertThat(conversionService.convert(10, String.class)).isEqualTo("10");
-        IpPort result = conversionService.convert("127.0.0.1:8080", IpPort.class);
-        assertThat(result).isEqualTo(new IpPort("127.0.0.1", 8080));
+        IpPort ipPort = conversionService.convert("127.0.0.1:8080", IpPort.class);
+        assertThat(ipPort).isEqualTo(new IpPort("127.0.0.1", 8080));
+
+        String ipPortString = conversionService.convert(new IpPort("127.0.0.1", 8080), String.class);
+        assertThat(ipPortString).isEqualTo("127.0.0.1:8080");
+
 
     }
 }
