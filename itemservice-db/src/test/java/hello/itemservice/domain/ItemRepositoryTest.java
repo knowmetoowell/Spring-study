@@ -74,7 +74,7 @@ class ItemRepositoryTest {
         ItemUpdateDto updateParam = new ItemUpdateDto("item2", 20000, 30);
         itemRepository.update(itemId, updateParam);
 
-        //then
+        //thenf
         Item findItem = itemRepository.findById(itemId).get();
         assertThat(findItem.getItemName()).isEqualTo(updateParam.getItemName());
         assertThat(findItem.getPrice()).isEqualTo(updateParam.getPrice());
