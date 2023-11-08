@@ -102,7 +102,14 @@ public class LoginController {
                           @RequestParam(defaultValue = "/") String redirectURL,
                           HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
+            /*
+            BindingResult는 스프링이 제공하는 검증 오류를 보관하는 객체
+            데이터 유효성 검사를 실패하면 예외 발생(ConstraintViolationException)하는데
+            그 에러 정보를 BindingResult에 담음
+             */
+            log.info(bindingResult.toString());
             return "login/loginForm";
+
         }
 
         Member loginMember = loginService.login(form.getLoginId(), form.getPassword());

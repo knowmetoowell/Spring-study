@@ -16,6 +16,13 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
+
+    /**
+     * 호출되는 Controller의 파라미터 값을 검사하는 콜백 함수
+     *
+     * @param parameter 클라이언트로 부터 받은 파라미터
+     * @return 적용 여부
+     */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         log.info("supportsParameter 실행");
@@ -26,8 +33,22 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         return hasLoginAnnotation && hasMemberType;
     }
 
+    /**
+     * supportsParameter 콜백 함수에서 true를 반환했을 경우
+     * 호출되는 콜백 함수
+     *
+     * @param parameter
+     * @param mavContainer
+     * @param webRequest
+     * @param binderFactory
+     * @return
+     * @throws Exception
+     */
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter parameter
+            , ModelAndViewContainer mavContainer
+            , NativeWebRequest webRequest
+            , WebDataBinderFactory binderFactory) throws Exception {
 
         log.info("resolveArgument 실행");
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
